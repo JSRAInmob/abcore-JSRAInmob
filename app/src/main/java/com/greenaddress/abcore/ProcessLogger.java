@@ -1,6 +1,7 @@
 package com.greenaddress.abcore;
 
 import android.util.Log;
+import io.github.pixee.security.BoundedLineReader;
 
 import org.apache.commons.compress.utils.IOUtils;
 
@@ -31,7 +32,7 @@ class ProcessLogger extends Thread {
             final String[] errors = new String[3];
 
             int counter = 0;
-            while ((line = br.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(br, 5_000_000)) != null) {
                 Log.v(TAG, line);
                 errors[counter++ % 3] = line;
             }
