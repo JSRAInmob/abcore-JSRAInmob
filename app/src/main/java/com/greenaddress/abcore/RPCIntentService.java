@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import io.github.pixee.security.BoundedLineReader;
 
 import net.freehaven.tor.control.TorControlConnection;
 
@@ -76,7 +77,7 @@ public class RPCIntentService extends IntentService {
                 final BufferedReader br = new BufferedReader(new FileReader(file));
                 String line;
 
-                while ((line = br.readLine()) != null) {
+                while ((line = BoundedLineReader.readLine(br, 5_000_000)) != null) {
                     text.append(line);
                 }
                 br.close();
