@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
@@ -92,7 +94,7 @@ class Utils {
         final FileOutputStream fos = new FileOutputStream(filePath);
         final long start_download_time = System.currentTimeMillis();
 
-        final DataInputStream dis = new DataInputStream(new BufferedInputStream(new URL(url).openStream()));
+        final DataInputStream dis = new DataInputStream(new BufferedInputStream(Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).openStream()));
 
         final byte[] buffer = new byte[1024];
         int length;
